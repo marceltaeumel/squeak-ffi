@@ -2,6 +2,7 @@ SmalltalkCISpec {
   #name : 'Squeak FFI',
   #loading : [
     SCIMetacelloLoadSpec {
+      #repository : 'https://squeaksource.com/MetacelloRepository',
       #configuration : 'FFI',
       #load : [ 'dev' ],
       #platforms : [ #squeak ]
