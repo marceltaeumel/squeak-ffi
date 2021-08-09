@@ -4,9 +4,9 @@ SmalltalkCISpec {
     SCIMetacelloLoadSpec {
       #repository : 'https://squeaksource.com/MetacelloRepository',
       #configuration : 'FFI',
+      #version : #development,
       #load : [ 'dev' ],
       #platforms : [ #squeak ]
     }
-
   ]
 }
