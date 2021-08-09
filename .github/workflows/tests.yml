@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  # schedule:
+    # - cron: '0 0 * * *' # Test once a day
+  workflow_dispatch:
+
+jobs:
+  test-fresh:
+    strategy:
+      matrix:
+        smalltalk:
+          - Squeak64-Trunk
+        os:
+          # - ubuntu-latest
+          - windows-latest
+          # - macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: hpi-swa/setup-smalltalkCI@v1.1.0
+        id: smalltalkci
+        with:
+          smalltalk-image: ${{ matrix.smalltalk }}
+          smalltalkCI-source: 'marceltaeumel/smalltalkCI'
+          smalltalkCI-branch: 'marceltaeumel/custom-vm'
+      - run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-image }}
+        shell: bash
+        timeout-minutes: 15
+
+  # test-existing:
+  #   needs: [phase-fresh]
