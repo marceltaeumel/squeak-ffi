@@ -12,9 +12,9 @@ jobs:
         smalltalk:
           - Squeak64-Trunk
         os:
-          # - ubuntu-latest
+          - ubuntu-latest
           - windows-latest
-          # - macos-latest
+          - macos-latest
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
@@ -28,8 +28,8 @@ jobs:
         continue-on-error: true
         shell: bash
         timeout-minutes: 15
-      - name: Setup tmate debugging session
-        uses: mxschmitt/action-tmate@v3
+      # - name: Setup tmate debugging session
+      #   uses: mxschmitt/action-tmate@v3
 
   # test-existing:
   #   needs: [phase-fresh]
