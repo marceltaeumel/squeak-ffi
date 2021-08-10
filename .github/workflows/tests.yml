@@ -18,18 +18,20 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
-      - uses: hpi-swa/setup-smalltalkCI@v1
+      - uses: marceltaeumel/setup-smalltalkCI@marceltaeumel/install-path
         id: smalltalkci
         with:
           smalltalk-image: ${{ matrix.smalltalk }}
-          # smalltalkCI-source: 'marceltaeumel/smalltalkCI'
-          # smalltalkCI-branch: 'marceltaeumel/custom-vm'
-      - run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-image }}
-        continue-on-error: true
+      - run: smalltalkci -s ${{ env.smalltalk-image }}
+        continue-on-error: false
         shell: bash
         timeout-minutes: 15
       # - name: Setup tmate debugging session
       #   uses: mxschmitt/action-tmate@v3
+
+
+
+# /c/Users/runneradmin/.smalltalkCI
 
   # test-existing:
   #   needs: [phase-fresh]
