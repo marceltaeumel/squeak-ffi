@@ -18,22 +18,19 @@ vm_details=$(squeak::get_vm_details \
 set_vars vm_filename vm_path git_tag "${vm_details}"
 
 LATEST_BUILD="https://github.com/OpenSmalltalk/opensmalltalk-vm/releases/latest-build"
-WINDOWS_BUILD="${LATEST_BUILD}/squeak.cog.spur_win64x64.zip"
-LINUX_BUILD="${{LATEST_BUILD}/squeak.cog.spur_linux64x64.tar.gz"
-# MACOS_BUILD: "https://github.com/hpi-swa/smalltalkCI/releases/download/v2.9.6/squeak.cog.v3_macos32x86_202101260417.dmg"
-MACOS_BUILD="${LATEST_BUILD}/squeak.cog.spur_macos64x64.dmg"
 
 case $RUNNER_OS in
 	"Windows")
-		download_url="${WINDOWS_BUILD}"
+		download_url="${LATEST_BUILD}/squeak.cog.spur_win64x64.zip"
 		target="${SMALLTALK_CI_CACHE}/vm.zip"
 		;;
 	"Linux")
-		download_url="${LINUX_BUILD}"
+		download_url="${LATEST_BUILD}/squeak.cog.spur_linux64x64.tar.gz"
 		target="${SMALLTALK_CI_CACHE}/vm.tar.gz"
 		;;
 	"macOS")
-		download_url="${MACOS_BUILD}"
+		# download_url="https://github.com/hpi-swa/smalltalkCI/releases/download/v2.9.6/squeak.cog.v3_macos32x86_202101260417.dmg"
+		download_url="${LATEST_BUILD}/squeak.cog.spur_macos64x64.dmg"
 		target="${SMALLTALK_CI_CACHE}/vm.dmg"
 		;;
 esac
