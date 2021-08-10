@@ -85,7 +85,8 @@ jobs:
       - name: Download Artifacts
         uses: actions/download-artifact@v2
         with: # all artifacts
-          path: ${{ env.SMALLTALK_CI_BUILD_BASE }}
+          path: .smalltalkCI/_builds
+          # ${{ env.SMALLTALK_CI_BUILD_BASE }} is not working on Windows
 
       - name: Run Tests
         shell: bash
