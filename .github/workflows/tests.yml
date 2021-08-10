@@ -22,7 +22,9 @@ jobs:
         id: smalltalkci
         with:
           smalltalk-image: ${{ matrix.smalltalk }}
-      - run: smalltalkci -s ${{ env.smalltalk-image }}
+      - run: printenv
+        shell: bash
+      - run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-image }}
         continue-on-error: false
         shell: bash
         timeout-minutes: 15
