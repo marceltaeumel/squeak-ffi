@@ -7,8 +7,8 @@ set -e
 source "${SMALLTALK_CI_HOME}/helpers.sh" # download_file extract_file ...
 source "${SMALLTALK_CI_HOME}/squeak/run.sh" # get_vm_details
 
-popd "${SMALLTALK_CI_BUILD_BASE}"
+pushd "${SMALLTALK_CI_BUILD_BASE}"
 ls -lisa
-pushd
+popd
 
 # squeak::test_project

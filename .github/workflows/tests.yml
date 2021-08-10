@@ -43,7 +43,11 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.os }}
-          path: ${{ env.SMALLTALK_CI_BUILD }}/*
+          path: |
+            .smalltalkCI/_builds/*
+            !.smalltalkCI/_builds/*-cache/*
+          # ${{ env.SMALLTALK_CI_BUILD }}/* absolute path does not work on Windows
+
       # - name: Setup tmate debugging session
       #   uses: mxschmitt/action-tmate@v3
 
