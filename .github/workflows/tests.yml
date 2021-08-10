@@ -64,7 +64,12 @@ jobs:
           - ubuntu-latest
           - windows-latest
           - macos-latest
+        artifact:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
     runs-on: ${{ matrix.os }}
+    if: ${{ matrix.artifact }} != ${{ matrix.os }}
     env:
       CONFIG_SMALLTALK: ${{ matrix.smalltalk }}
     steps:
@@ -85,9 +90,16 @@ jobs:
       - name: Download Artifacts
         uses: actions/download-artifact@v2
         with: # all artifacts
+          name: ${{ matrix.artifact }}
           path: .smalltalkCI/_builds
           # ${{ env.SMALLTALK_CI_BUILD_BASE }} is not working on Windows
 
-      - name: Run Tests
+      # - name: Run Tests
+      #   shell: bash
+      #   run: ./test_image.sh
+
+      - name: Run Tests (.image from ${{ matrix.artifact }})
+        continue-on-error: false
         shell: bash
-        run: ./test_image.sh
+        run: smalltalkci --smalltalk ${{ matrix.smalltalk }} --vm ${{ env.VM_FILEPATH }} --image "${{ env.SMALLTALK_CI_BUILD_BASE}/TravisCI.image"
+        timeout-minutes: 15

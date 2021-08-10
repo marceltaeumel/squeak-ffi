@@ -18,7 +18,6 @@ test() {
 	squeak::run_script "test.st"
 }
 
-
 echo '::group::Test image from Windows ...'
 SMALLTALK_CI_BUILD="${SMALLTALK_CI_BUILD_BASE}/windows-latest"
 test
