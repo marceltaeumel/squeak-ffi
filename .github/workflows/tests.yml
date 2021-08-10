@@ -105,5 +105,5 @@ jobs:
       - name: Run Tests (.image from ${{ matrix.artifact }})
         continue-on-error: false
         shell: bash
-        run: smalltalkci --smalltalk ${{ matrix.smalltalk }} --vm ${{ env.VM_FILEPATH }} --image "${{ env.SMALLTALK_CI_BUILD_BASE}/TravisCI.image"
+        run: smalltalkci --smalltalk ${{ matrix.smalltalk }} --vm ${{ env.VM_FILEPATH }} --image "${{ env.SMALLTALK_CI_BUILD_BASE }}/TravisCI.image"
         timeout-minutes: 15
