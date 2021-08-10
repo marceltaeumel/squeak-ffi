@@ -20,7 +20,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Set up SmalltalkCI
-        uses: hpi-swa/setup-smalltalkCI@v1
+        # uses: hpi-swa/setup-smalltalkCI@v1
+        uses: marceltaeumel/setup-smalltalkCI@marceltaeumel/install-path
         id: smalltalkci
         with:
           smalltalk-image: ${{ matrix.smalltalk }}

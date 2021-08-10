@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-source "${SMALLTALK_CI_HOME}/helpers.sh" # download_file extract_file
+source "${SMALLTALK_CI_HOME}/helpers.sh" # download_file extract_file ...
 source "${SMALLTALK_CI_HOME}/squeak/run.sh" # get_vm_details
 
 config_smalltalk="${CONFIG_SMALLTALK}"
@@ -18,6 +18,7 @@ vm_details=$(squeak::get_vm_details \
 set_vars vm_filename vm_path git_tag "${vm_details}"
 
 LATEST_BUILD="https://github.com/OpenSmalltalk/opensmalltalk-vm/releases/download/latest-build"
+is_dir "${SMALLTALK_CI_CACHE}" || mkdir "${SMALLTALK_CI_CACHE}"
 
 case $RUNNER_OS in
 	"Windows")
