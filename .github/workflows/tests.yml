@@ -39,13 +39,6 @@ jobs:
         run: smalltalkci --smalltalk ${{ matrix.smalltalk }} --vm ${{ env.VM_FILEPATH }}
         timeout-minutes: 15
 
-      - name: Find Build Directory
-        shell: bash
-        run: |
-          cd ${SMALLTALK_CI_BUILD_BASE}
-          SMALLTALK_CI_BUILD=$(find * -type d | head -n 1)
-          echo "SMALLTALK_CI_BUILD=${SMALLTALK_CI_BUILD}" >> $GITHUB_ENV
-
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
