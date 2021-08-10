@@ -18,10 +18,10 @@ jobs:
     env:
       CONFIG_SMALLTALK: Squeak64-Trunk
       LATEST_BUILD: "https://github.com/OpenSmalltalk/opensmalltalk-vm/releases/latest-build"
-      WINDOWS_BUILD: ${{ env.LATEST_BUILD }}"/squeak.cog.spur_win64x64.zip"
-      LINUX_BUILD: ${{ env.LATEST_BUILD }}"/squeak.cog.spur_linux64x64.tar.gz"
+      WINDOWS_BUILD: "${{ env.LATEST_BUILD }}/squeak.cog.spur_win64x64.zip"
+      LINUX_BUILD: "${{ env.LATEST_BUILD }}/squeak.cog.spur_linux64x64.tar.gz"
       # MACOS_BUILD: "https://github.com/hpi-swa/smalltalkCI/releases/download/v2.9.6/squeak.cog.v3_macos32x86_202101260417.dmg"
-      MACOS_BUILD: ${{ env.LATEST_BUILD }}"/squeak.cog.spur_macos64x64.dmg"
+      MACOS_BUILD: "${{ env.LATEST_BUILD }}/squeak.cog.spur_macos64x64.dmg"
     steps:
       - uses: actions/checkout@v2
       - name: Set up SmalltalkCI
