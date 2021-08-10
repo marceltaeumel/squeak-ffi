@@ -95,7 +95,7 @@ jobs:
         uses: actions/download-artifact@v2
         with: # all artifacts
           name: ${{ matrix.artifact }}
-          path: .smalltalkCI/_image
+          path: .smalltalkCI/_build
           # ${{ env.SMALLTALK_CI_BUILD_BASE }} is not working on Windows
 
       # - name: Run Tests
@@ -105,5 +105,5 @@ jobs:
       - name: Run Tests (.image from ${{ matrix.artifact }})
         continue-on-error: false
         shell: bash
-        run: smalltalkci --smalltalk ${{ matrix.smalltalk }} --vm ${{ env.VM_FILEPATH }} --image ".smalltalkCI/_image/TravisCI.image" .smalltalk.2.ston
+        run: smalltalkci --smalltalk ${{ matrix.smalltalk }} --vm ${{ env.VM_FILEPATH }} --image ".smalltalkCI/_build/TravisCI.image" .smalltalk.2.ston
         timeout-minutes: 15
