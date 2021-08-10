@@ -1,17 +1,17 @@
 #!/bin/bash
 set -e
 
+[[ -z "${SMALLTALK_CI_HOME}" ]] && exit 2
+[[ -z "${CONFIG_SMALLTALK}" ]] && exit 3
+[[ -z "${SMALLTALK_CI_CACHE}" ]] && exit 4
+[[ -z "${SMALLTALK_CI_VMS}" ]] && exit 5
+
 source "${SMALLTALK_CI_HOME}/helpers.sh" # download_file extract_file ...
 source "${SMALLTALK_CI_HOME}/squeak/run.sh" # get_vm_details
 
 config_smalltalk="${CONFIG_SMALLTALK}"
 config_vm_dir="${SMALLTALK_CI_VMS}/${config_smalltalk}"
 require_spur=1
-
-# vm_details # not needed
-# vm_filename # not needed
-# vm_path
-# git_tag # not needed
 
 vm_details=$(squeak::get_vm_details \
 	"${config_smalltalk}" "$(uname -s)" "${require_spur}")

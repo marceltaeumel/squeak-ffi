@@ -25,20 +25,16 @@ jobs:
         id: smalltalkci
         with:
           smalltalk-image: ${{ matrix.smalltalk }}
-      # - run: |
-      #     echo $SMALLTALK_CI_HOME
-      #     echo $SMALLTALK_CI_VMS
-      #   shell: bash
-      - run: printenv
-        shell: bash
+          smalltalkCI-workspace: ${{ github.workspace }}
       - name: Download Latest OpenSmalltalk VM
         shell: bash
         run: ./prepare_vm.sh
         env:
           CONFIG_SMALLTALK: ${{ matrix.smalltalk }}
       - name: Run Tests
+        continue-on-error: true # To also do second phase
         shell: bash
-        run: smalltalkci -s ${{ matrix.smalltalk }} --vm ${{ env.VM_FILEPATH }}
+        run: smalltalkci --smalltalk ${{ matrix.smalltalk }} --vm ${{ env.VM_FILEPATH }}
         timeout-minutes: 15
       # - name: Setup tmate debugging session
       #   uses: mxschmitt/action-tmate@v3
