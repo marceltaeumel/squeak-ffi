@@ -36,7 +36,7 @@ jobs:
       - name: Run Tests
         continue-on-error: true # To also do second phase
         shell: bash
-        run: smalltalkci --smalltalk ${{ matrix.smalltalk }} --vm ${{ env.VM_FILEPATH }}
+        run: smalltalkci --smalltalk ${{ matrix.smalltalk }} --vm ${{ env.VM_FILEPATH }} .smalltalk.1.ston
         timeout-minutes: 15
 
       - name: Upload Artifacts
@@ -45,9 +45,9 @@ jobs:
           name: ${{ matrix.os }}
           path: |
             .smalltalkCI/_builds/*.sources
-            .smalltalkCI/_builds/*.st
             .smalltalkCI/_builds/*.image
             .smalltalkCI/_builds/*.changes
+            !.smalltalkCI/_builds/.*
           # ${{ env.SMALLTALK_CI_BUILD }}/* absolute path does not work on Windows
 
       # - name: Setup tmate debugging session
@@ -95,7 +95,7 @@ jobs:
         uses: actions/download-artifact@v2
         with: # all artifacts
           name: ${{ matrix.artifact }}
-          path: .smalltalkCI/_builds
+          path: .smalltalkCI/_image
           # ${{ env.SMALLTALK_CI_BUILD_BASE }} is not working on Windows
 
       # - name: Run Tests
@@ -105,5 +105,5 @@ jobs:
       - name: Run Tests (.image from ${{ matrix.artifact }})
         continue-on-error: false
         shell: bash
-        run: smalltalkci --smalltalk ${{ matrix.smalltalk }} --vm ${{ env.VM_FILEPATH }} --image "${{ env.SMALLTALK_CI_BUILD_BASE }}/TravisCI.image"
+        run: smalltalkci --smalltalk ${{ matrix.smalltalk }} --vm ${{ env.VM_FILEPATH }} --image ".smalltalkCI/_image/TravisCI.image" .smalltalk.2.ston
         timeout-minutes: 15

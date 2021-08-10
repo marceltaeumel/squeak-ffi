@@ -1,0 +1,6 @@
+SmalltalkCISpec {
+  #name : 'Squeak FFI',
+  #testing : {
+    #categories : [ 'FFI-*' ]
+  }
+}

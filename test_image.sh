@@ -19,7 +19,7 @@ test() {
 }
 
 echo '::group::Test image from Windows ...'
-SMALLTALK_CI_BUILD="${SMALLTALK_CI_BUILD_BASE}/windows-latest"
+SMALLTALK_CI_BUILD="${SMALLTALK_CI_BUILD_BASE}/windows-latest/TravisCI.image"
 test
 echo '::endgroup::'
 
