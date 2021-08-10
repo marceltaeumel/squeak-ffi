@@ -17,7 +17,7 @@ vm_details=$(squeak::get_vm_details \
 	"${config_smalltalk}" "$(uname -s)" "${require_spur}")
 set_vars vm_filename vm_path git_tag "${vm_details}"
 
-LATEST_BUILD="https://github.com/OpenSmalltalk/opensmalltalk-vm/releases/latest-build"
+LATEST_BUILD="https://github.com/OpenSmalltalk/opensmalltalk-vm/releases/download/latest-build"
 
 case $RUNNER_OS in
 	"Windows")

@@ -28,6 +28,8 @@ jobs:
       #     echo $SMALLTALK_CI_HOME
       #     echo $SMALLTALK_CI_VMS
       #   shell: bash
+      - run: printenv
+        shell: bash
       - name: Download Latest OpenSmalltalk VM
         shell: bash
         run: ./prepare_vm.sh
