@@ -8,30 +8,42 @@ on:
 jobs:
   test-fresh:
     strategy:
+      fail-fast: false
       matrix:
-        smalltalk:
-          - Squeak64-Trunk
         os:
           - ubuntu-latest
           - windows-latest
           - macos-latest
     runs-on: ${{ matrix.os }}
+    env:
+      CONFIG_SMALLTALK: Squeak64-Trunk
+      LATEST_BUILD: "https://github.com/OpenSmalltalk/opensmalltalk-vm/releases/latest-build"
+      WINDOWS_BUILD: ${{ env.LATEST_BUILD }}"/squeak.cog.spur_win64x64.zip"
+      LINUX_BUILD: ${{ env.LATEST_BUILD }}"/squeak.cog.spur_linux64x64.tar.gz"
+      # MACOS_BUILD: "https://github.com/hpi-swa/smalltalkCI/releases/download/v2.9.6/squeak.cog.v3_macos32x86_202101260417.dmg"
+      MACOS_BUILD: ${{ env.LATEST_BUILD }}"/squeak.cog.spur_macos64x64.dmg"
     steps:
       - uses: actions/checkout@v2
-      - uses: marceltaeumel/setup-smalltalkCI@marceltaeumel/install-path
+      - name: Set up SmalltalkCI
+        uses: hpi-swa/setup-smalltalkCI@v1
         id: smalltalkci
         with:
-          smalltalk-image: ${{ matrix.smalltalk }}
-      - run: printenv
+          smalltalk-image: ${{ env.CONFIG_SMALLTALK }}
+      # - run: |
+      #     echo $SMALLTALK_CI_HOME
+      #     echo $SMALLTALK_CI_VMS
+      #   shell: bash
+      - name: Download Latest OpenSmalltalk VM
         shell: bash
-      - run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-image }}
-        continue-on-error: false
+        run: ./prepare_vm.sh
+      - name: Run Tests
         shell: bash
+        run: smalltalkci -s ${{ env.CONFIG_SMALLTALK }} --vm ${{ env.VM_FILEPATH }}
         timeout-minutes: 15
       # - name: Setup tmate debugging session
       #   uses: mxschmitt/action-tmate@v3
 
-
+# env.SMALLTALK_CI_HOME
 
 # /c/Users/runneradmin/.smalltalkCI
 
