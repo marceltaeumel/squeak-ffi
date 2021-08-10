@@ -46,4 +46,4 @@ if is_cygwin_build || is_mingw64_build; then
 	chmod +x "$(dirname ${vm_path})/"*.dll
 fi
 
-echo "${VM_FILEPATH}=${vm_path}" >> $GITHUB_ENV
+echo "VM_FILEPATH=${vm_path}" >> $GITHUB_ENV
