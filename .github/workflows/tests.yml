@@ -17,8 +17,11 @@ jobs:
           - windows-latest
           - macos-latest
     runs-on: ${{ matrix.os }}
+    env:
+      CONFIG_SMALLTALK: ${{ matrix.smalltalk }}
     steps:
       - uses: actions/checkout@v2
+
       - name: Set up SmalltalkCI
         # uses: hpi-swa/setup-smalltalkCI@v1
         uses: marceltaeumel/setup-smalltalkCI@marceltaeumel/install-path
@@ -29,19 +32,62 @@ jobs:
       - name: Download Latest OpenSmalltalk VM
         shell: bash
         run: ./prepare_vm.sh
-        env:
-          CONFIG_SMALLTALK: ${{ matrix.smalltalk }}
+        
       - name: Run Tests
         continue-on-error: true # To also do second phase
         shell: bash
         run: smalltalkci --smalltalk ${{ matrix.smalltalk }} --vm ${{ env.VM_FILEPATH }}
         timeout-minutes: 15
+
+      - name: Find Build Directory
+        shell: bash
+        run: |
+          cd ${SMALLTALK_CI_BUILD_BASE}
+          SMALLTALK_CI_BUILD=$(find * -type d | head -n 1)
+          echo "SMALLTALK_CI_BUILD=${SMALLTALK_CI_BUILD}" >> $GITHUB_ENV
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.os }}
+          path: ${{ env.SMALLTALK_CI_BUILD }}/*
       # - name: Setup tmate debugging session
       #   uses: mxschmitt/action-tmate@v3
 
-# env.SMALLTALK_CI_HOME
+  test-existing:
+    needs: [test-fresh]
+    strategy:
+      fail-fast: false
+      matrix:
+        smalltalk:
+          - Squeak64-Trunk
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+    runs-on: ${{ matrix.os }}
+    env:
+      CONFIG_SMALLTALK: ${{ matrix.smalltalk }}
+    steps:
+      - uses: actions/checkout@v2
 
-# /c/Users/runneradmin/.smalltalkCI
+      - name: Set up SmalltalkCI
+        # uses: hpi-swa/setup-smalltalkCI@v1
+        uses: marceltaeumel/setup-smalltalkCI@marceltaeumel/install-path
+        id: smalltalkci
+        with:
+          smalltalk-image: ${{ matrix.smalltalk }}
+          smalltalkCI-workspace: ${{ github.workspace }}
 
-  # test-existing:
-  #   needs: [phase-fresh]
+      - name: Download Latest OpenSmalltalk VM
+        shell: bash
+        run: ./prepare_vm.sh
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v2
+        with: # all artifacts
+          path: ${{ env.SMALLTALK_CI_BUILD_BASE }}
+
+      - name: Run Tests
+        shell: bash
+        run: ./test_image.sh
