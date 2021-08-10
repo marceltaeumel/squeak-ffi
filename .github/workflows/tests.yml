@@ -44,8 +44,10 @@ jobs:
         with:
           name: ${{ matrix.os }}
           path: |
-            .smalltalkCI/_builds/*
-            !.smalltalkCI/_builds/*-cache/*
+            .smalltalkCI/_builds/*.sources
+            .smalltalkCI/_builds/*.st
+            .smalltalkCI/_builds/*.image
+            .smalltalkCI/_builds/*.changes
           # ${{ env.SMALLTALK_CI_BUILD }}/* absolute path does not work on Windows
 
       # - name: Setup tmate debugging session
