@@ -8,5 +8,8 @@ SmalltalkCISpec {
       #load : [ 'dev' ],
       #platforms : [ #squeak ]
     }
-  ]
+  ],
+  #testing : {
+    #categories : [ 'FFI-*' ]
+  }
 }
