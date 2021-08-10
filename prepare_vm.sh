@@ -4,14 +4,14 @@ set -e
 source "${SMALLTALK_CI_HOME}/helpers.sh" # download_file extract_file
 source "${SMALLTALK_CI_HOME}/squeak/run.sh" # get_vm_details
 
-local config_smalltalk="${CONFIG_SMALLTALK}"
-local config_vm_dir="${SMALLTALK_CI_VMS}/${config_smalltalk}"
-local require_spur=1
+config_smalltalk="${CONFIG_SMALLTALK}"
+config_vm_dir="${SMALLTALK_CI_VMS}/${config_smalltalk}"
+require_spur=1
 
-local vm_details # not needed
-local vm_filename # not needed
-local vm_path
-local git_tag # not needed
+# vm_details # not needed
+# vm_filename # not needed
+# vm_path
+# git_tag # not needed
 
 vm_details=$(squeak::get_vm_details \
 	"${config_smalltalk}" "$(uname -s)" "${require_spur}")
@@ -25,16 +25,16 @@ MACOS_BUILD="${LATEST_BUILD}/squeak.cog.spur_macos64x64.dmg"
 
 case $RUNNER_OS in
 	"Windows")
-		local download_url="${WINDOWS_BUILD}"
-		local target="${SMALLTALK_CI_CACHE}/vm.zip"
+		download_url="${WINDOWS_BUILD}"
+		target="${SMALLTALK_CI_CACHE}/vm.zip"
 		;;
 	"Linux")
-		local download_url="${LINUX_BUILD}"
-		local target="${SMALLTALK_CI_CACHE}/vm.tar.gz"
+		download_url="${LINUX_BUILD}"
+		target="${SMALLTALK_CI_CACHE}/vm.tar.gz"
 		;;
 	"macOS")
-		local download_url="${MACOS_BUILD}"
-		local target="${SMALLTALK_CI_CACHE}/vm.dmg"
+		download_url="${MACOS_BUILD}"
+		target="${SMALLTALK_CI_CACHE}/vm.dmg"
 		;;
 esac
 

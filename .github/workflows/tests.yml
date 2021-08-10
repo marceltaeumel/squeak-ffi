@@ -17,8 +17,6 @@ jobs:
           - windows-latest
           - macos-latest
     runs-on: ${{ matrix.os }}
-    env:
-      CONFIG_SMALLTALK: Squeak64-Trunk
     steps:
       - uses: actions/checkout@v2
       - name: Set up SmalltalkCI
