@@ -17,6 +17,12 @@ vm_details=$(squeak::get_vm_details \
 	"${config_smalltalk}" "$(uname -s)" "${require_spur}")
 set_vars vm_filename vm_path git_tag "${vm_details}"
 
+LATEST_BUILD="https://github.com/OpenSmalltalk/opensmalltalk-vm/releases/latest-build"
+WINDOWS_BUILD="${LATEST_BUILD}/squeak.cog.spur_win64x64.zip"
+LINUX_BUILD="${{LATEST_BUILD}/squeak.cog.spur_linux64x64.tar.gz"
+# MACOS_BUILD: "https://github.com/hpi-swa/smalltalkCI/releases/download/v2.9.6/squeak.cog.v3_macos32x86_202101260417.dmg"
+MACOS_BUILD="${LATEST_BUILD}/squeak.cog.spur_macos64x64.dmg"
+
 case $RUNNER_OS in
 	"Windows")
 		local download_url="${WINDOWS_BUILD}"
