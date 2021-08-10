@@ -68,8 +68,12 @@ jobs:
           - ubuntu-latest
           - windows-latest
           - macos-latest
+        exclude:
+          - { smalltalk: Squeak64-Trunk, os: ubuntu-latest, artifact: ubuntu-latest }
+          - { smalltalk: Squeak64-Trunk, os: windows-latest, artifact: windows-latest }
+          - { smalltalk: Squeak64-Trunk, os: macos-latest, artifact: macos-latest }
     runs-on: ${{ matrix.os }}
-    if: ${{ matrix.artifact }} != ${{ matrix.os }}
+    # if: ${{ matrix.artifact }} != ${{ matrix.os }} ... not working ... sigh ...
     env:
       CONFIG_SMALLTALK: ${{ matrix.smalltalk }}
     steps:
