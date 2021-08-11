@@ -1,8 +1,8 @@
 name: CI
 
 on:
-  # schedule:
-    # - cron: '0 0 * * *' # Test once a day
+  schedule:
+    - cron: '0 0 * * *' # Test once a day
   workflow_dispatch:
 
 jobs:
@@ -37,7 +37,7 @@ jobs:
         continue-on-error: true # To also do second phase
         shell: bash
         run: smalltalkci --smalltalk ${{ matrix.smalltalk }} --vm ${{ env.VM_FILEPATH }} .smalltalk.1.ston
-        timeout-minutes: 15
+        timeout-minutes: 5
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
@@ -49,6 +49,20 @@ jobs:
             .smalltalkCI/_builds/*.changes
             !.smalltalkCI/_builds/.*
           # ${{ env.SMALLTALK_CI_BUILD }}/* absolute path does not work on Windows
+
+      - run: mv .smalltalkCI/_builds/squeak-ffi.xml .smalltalkCI/_builds/${{ matrix.os }}.xml
+        shell: bash
+
+      - name: Update XML log in latest-test-results
+        uses: ncipollo/release-action@v1.8.8
+        with:
+          prerelease: true
+          allowUpdates: true
+          replacesArtifacts: true
+          artifacts: .smalltalkCI/_builds/${{ matrix.os }}.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: 'latest-test-builds'
+
 
       # - name: Setup tmate debugging session
       #   uses: mxschmitt/action-tmate@v3
@@ -103,7 +117,20 @@ jobs:
       #   run: ./test_image.sh
 
       - name: Run Tests (.image from ${{ matrix.artifact }})
-        continue-on-error: false
+        continue-on-error: true
         shell: bash
         run: smalltalkci --smalltalk ${{ matrix.smalltalk }} --vm ${{ env.VM_FILEPATH }} --image ".smalltalkCI/_builds/TravisCI.image" .smalltalk.2.ston
-        timeout-minutes: 15
+        timeout-minutes: 5
+
+      - run: mv .smalltalkCI/_builds/squeak-ffi.xml .smalltalkCI/_builds/${{ matrix.os }}-from-${{ matrix.artifact }}.xml
+        shell: bash
+
+      - name: Update XML log in latest-test-results
+        uses: ncipollo/release-action@v1.8.8
+        with:
+          prerelease: true
+          allowUpdates: true
+          replacesArtifacts: true
+          artifacts: .smalltalkCI/_builds/${{ matrix.os }}-from-${{ matrix.artifact }}.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: 'latest-test-builds'
