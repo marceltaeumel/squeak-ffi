@@ -13,10 +13,10 @@ jobs:
         smalltalk:
           - Squeak64-Trunk
         os:
-          - ubuntu-18.04 #ubuntu-latest
-          - windows-2019 #windows-latest
-          - macos-10.15 #macos-latest
-    runs-on: ${{ matrix.os }}
+          - { family: ubuntu, version: ubuntu-18.04 }
+          - { family: windows, version: windows-2019 }
+          - { family: macos, version: macos-10.15 }
+    runs-on: ${{ matrix.os.version }}
     env:
       CONFIG_SMALLTALK: ${{ matrix.smalltalk }}
     steps:
@@ -42,7 +42,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.os }}
+          name: ${{ matrix.os.family }}
           path: |
             .smalltalkCI/_builds/*.sources
             .smalltalkCI/_builds/*.image
@@ -50,7 +50,7 @@ jobs:
             !.smalltalkCI/_builds/.*
           # ${{ env.SMALLTALK_CI_BUILD }}/* absolute path does not work on Windows
 
-      - run: mv .smalltalkCI/_builds/squeak-ffi.xml .smalltalkCI/_builds/${{ matrix.os }}.xml
+      - run: mv .smalltalkCI/_builds/squeak-ffi.xml .smalltalkCI/_builds/${{ matrix.os.family }}.xml
         shell: bash
 
       - name: Update XML log in latest-test-results
@@ -75,17 +75,17 @@ jobs:
         smalltalk:
           - Squeak64-Trunk
         os:
-          - ubuntu-latest
-          - windows-latest
-          - macos-latest
+          - ubuntu-18.04 #ubuntu-latest
+          - windows-2019 #windows-latest
+          - macos-10.15 #macos-latest
         artifact:
-          - ubuntu-latest
-          - windows-latest
-          - macos-latest
+          - ubuntu
+          - windows
+          - macos
         exclude:
-          - { smalltalk: Squeak64-Trunk, os: ubuntu-latest, artifact: ubuntu-latest }
-          - { smalltalk: Squeak64-Trunk, os: windows-latest, artifact: windows-latest }
-          - { smalltalk: Squeak64-Trunk, os: macos-latest, artifact: macos-latest }
+          - { smalltalk: Squeak64-Trunk, os: ubuntu-18.04, artifact: ubuntu }
+          - { smalltalk: Squeak64-Trunk, os: windows-2019, artifact: windows }
+          - { smalltalk: Squeak64-Trunk, os: macos-10.15, artifact: macos }
     runs-on: ${{ matrix.os }}
     # if: ${{ matrix.artifact }} != ${{ matrix.os }} ... not working ... sigh ...
     env:
